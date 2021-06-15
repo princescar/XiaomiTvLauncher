@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">启动器</string>
+    <string name="hdmi_1">HDMI 1</string>
+    <string name="hdmi_2">HDMI 2</string>
+    <string name="hdmi_3">HDMI 3</string>
+    <string name="settings">设置</string>
+</resources>
