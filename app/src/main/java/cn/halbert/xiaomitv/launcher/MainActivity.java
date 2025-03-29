@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
     private static final String LAST_INPUT_KEY = "lastInput";
     private static final String EXTERNAL_PLAY_ACTION = "com.xiaomi.mitv.tvplayer.EXTSRC_PLAY";
     private static final String EXTERNAL_PLAY_EXTRA_INPUT_KEY = "input";
+    private static final String SETTINGS_PACKAGE_NAME = "com.xiaomi.mitv.settings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,6 @@ public class MainActivity extends Activity {
             Button button = findViewById(id);
             button.setOnClickListener(v -> switchToInput(input));
         }
-
-        Button settingsButton = findViewById(R.id.btn_settings);
-        settingsButton.setOnClickListener(v -> openSettings());
     }
 
     private void switchToLastInput() {
@@ -70,7 +69,17 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void openSettings () {
-        startActivity(new Intent(Settings.ACTION_SETTINGS));
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            openSettings();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void openSettings() {
+        Intent intent = getPackageManager().getLaunchIntentForPackage(SETTINGS_PACKAGE_NAME);
+        startActivity(intent);
     }
 }
